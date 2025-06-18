@@ -19,13 +19,12 @@
             --border-color: rgba(255, 255, 255, 0.15); /* Warna border yang lebih terang */
             --shadow-light: rgba(0, 0, 0, 0.2);
             --shadow-dark: rgba(0, 0, 0, 0.4);
-            --tab-active-bg: rgba(99, 179, 237, 0.2); /* Latar belakang tab aktif */
         }
 
         body {
             background-color: var(--dark-blue-bg);
             font-family: 'Poppins', sans-serif;
-            -webkit-font-smoothing: antialiased; /* Better font rendering */
+            -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             -webkit-tap-highlight-color: transparent;
             color: var(--text-color-light);
@@ -33,7 +32,7 @@
         }
         
         * {
-            box-sizing: border-box; /* Include padding and border in element's total width and height */
+            box-sizing: border-box;
             scroll-behavior: smooth;
         }
         
@@ -45,32 +44,32 @@
         }
 
         .container {
-            max-width: 960px; /* Lebar container sedikit lebih besar */
+            max-width: 960px;
             margin: 0 auto;
-            padding: 20px 25px; /* Padding samping sedikit lebih besar */
+            padding: 20px 25px;
         }
         
         .text-center {
             text-align: center;
-            padding-bottom: 40px; /* Jarak bawah lebih jauh */
+            padding-bottom: 40px;
             margin-bottom: 20px;
             position: relative;
         }
         
         .text-center h1 {
-            font-size: 3.2em; /* Ukuran lebih besar lagi */
+            font-size: 3.2em;
             margin-bottom: 10px;
             animation: colorChange 15s infinite alternate;
-            font-weight: 800; /* Lebih tebal */
-            letter-spacing: -1px; /* Sedikit rapat */
-            text-shadow: 0 0 10px rgba(99, 179, 237, 0.5); /* Efek glow ringan */
+            font-weight: 800;
+            letter-spacing: -1px;
+            text-shadow: 0 0 10px rgba(99, 179, 237, 0.5);
         }
         
         .text-center h1 span {
             font-size: 0.4em;
             background-color: var(--accent-color);
-            padding: 5px 10px; /* Padding lebih besar */
-            border-radius: 15px; /* Lebih bulat */
+            padding: 5px 10px;
+            border-radius: 15px;
             color: var(--dark-blue-bg);
             font-weight: 700;
             vertical-align: middle;
@@ -79,16 +78,16 @@
         }
         
         .link {
-            margin-top: 15px; /* Jarak dari h1 */
+            margin-top: 15px;
         }
 
         .link a {
             text-decoration: none;
             color: var(--accent-color);
-            font-size: 1.15em; /* Ukuran sedikit lebih besar */
+            font-size: 1.15em;
             font-weight: 500;
-            margin: 8px 15px; /* Margin vertikal dan horizontal */
-            display: inline-block; /* Agar bisa berdampingan */
+            margin: 8px 15px;
+            display: inline-block;
             transition: color 0.3s ease, transform 0.2s ease;
             position: relative;
             padding-bottom: 3px;
@@ -112,76 +111,18 @@
             width: 100%;
         }
         
-        .tabs-container {
-            width: 100%;
-            overflow-x: auto; /* Memungkinkan scroll horizontal jika tab terlalu banyak */
-            -webkit-overflow-scrolling: touch; /* Untuk smooth scrolling di iOS */
-            white-space: nowrap; /* Mencegah item tab turun baris */
-            margin-bottom: 30px;
-            padding-bottom: 10px; /* Jarak untuk scrollbar */
-            border-bottom: 2px solid var(--border-color);
-            position: sticky; /* Agar tab menempel saat scroll */
-            top: 0;
-            background-color: var(--dark-blue-bg); /* Agar konten di belakang tidak terlihat saat sticky */
-            z-index: 100; /* Pastikan di atas konten lain */
-            box-shadow: 0 5px 15px var(--shadow-dark); /* Shadow untuk efek sticky */
-            border-radius: 0 0 10px 10px; /* Border radius bawah */
-        }
-
-        .tabs {
-            display: inline-flex; /* Agar tab tetap sejajar horizontal */
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            gap: 10px; /* Jarak antar tab */
-        }
-
-        .tab-item {
-            padding: 10px 20px;
-            cursor: pointer;
-            font-weight: 600;
-            color: var(--text-color-light);
-            background-color: var(--dark-blue-card);
-            border-radius: 8px;
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-            flex-shrink: 0; /* Mencegah item menyusut */
-            border: 1px solid var(--border-color);
-            box-shadow: 0 2px 5px var(--shadow-light);
-        }
-
-        .tab-item:hover {
-            background-color: rgba(99, 179, 237, 0.1);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px var(--shadow-dark);
-        }
-
-        .tab-item.active {
-            background-color: var(--tab-active-bg); /* Warna latar belakang aktif */
-            color: var(--accent-color); /* Warna teks aktif */
-            border-color: var(--accent-color); /* Border aktif */
-            box-shadow: 0 3px 8px var(--shadow-dark);
-            transform: translateY(0); /* Pastikan tidak terangkat */
-        }
-
+        /* Card styling remains similar to previous versions for aesthetics */
         .card {
             background-color: var(--dark-blue-card);
-            border-radius: 12px; /* Border radius lebih besar */
-            padding: 25px 30px; /* Padding lebih banyak */
-            margin-bottom: 35px; /* Jarak bawah antar card */
-            box-shadow: 0 8px 20px var(--shadow-dark); /* Shadow lebih kuat */
-            border: 1px solid var(--border-color); /* Border tipis */
-            display: none; /* Sembunyikan semua secara default */
-            opacity: 0;
-            transition: opacity 0.5s ease; /* Transisi untuk fade in/out */
-        }
-        
-        .card.active {
-            display: block; /* Tampilkan card aktif */
-            opacity: 1;
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin-bottom: 35px;
+            box-shadow: 0 8px 20px var(--shadow-dark);
+            border: 1px solid var(--border-color);
         }
         
         .card .title {
-            font-size: 2em; /* Ukuran lebih besar */
+            font-size: 2em;
             font-weight: 700;
             margin-bottom: 20px;
             color: var(--text-color-light);
@@ -193,9 +134,9 @@
         .card .endpoints {
             display: flex;
             align-items: center;
-            padding: 15px 0; /* Padding vertikal lebih banyak */
+            padding: 15px 0;
             border-bottom: solid 1px var(--border-color);
-            gap: 15px; /* Jarak antar elemen flex */
+            gap: 15px;
             transition: background-color 0.3s ease;
         }
         
@@ -204,58 +145,58 @@
         }
 
         .card .endpoints:hover {
-            background-color: rgba(99, 179, 237, 0.05); /* Sedikit highlight saat hover */
-            border-radius: 5px; /* Agar hover tidak terpotong di border utama card */
+            background-color: rgba(99, 179, 237, 0.05);
+            border-radius: 5px;
         }
 
         .card .endpoints .method {
             background-color: var(--accent-color);
             border-radius: 20px;
-            padding: 5px 15px; /* Padding lebih besar */
+            padding: 5px 15px;
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
             color: var(--dark-blue-bg);
             font-size: 0.9em;
             text-transform: uppercase;
-            min-width: 75px; /* Lebar minimum untuk konsistensi */
+            min-width: 75px;
             text-align: center;
             box-shadow: 0 2px 5px var(--shadow-light);
         }
         
         .card .endpoints .name {
-            font-size: 1.1em; /* Ukuran teks nama lebih besar */
+            font-size: 1.1em;
             font-weight: 500;
             color: var(--text-color-light);
             flex-grow: 1;
-            margin-left: 10px; /* Jarak dari method */
-            white-space: nowrap; /* Mencegah teks turun baris */
-            overflow: hidden; /* Sembunyikan jika terlalu panjang */
-            text-overflow: ellipsis; /* Tambahkan elipsis jika disembunyikan */
+            margin-left: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .card .endpoints a {
             background-color: var(--button-success);
             border-radius: 20px;
-            padding: 8px 18px; /* Padding lebih besar untuk tombol */
+            padding: 8px 18px;
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
             color: white;
             font-size: 0.9em;
             text-decoration: none;
             transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-            display: inline-flex; /* Untuk ikon */
+            display: inline-flex;
             align-items: center;
-            gap: 5px; /* Jarak antara teks dan ikon */
+            gap: 5px;
             box-shadow: 0 3px 8px var(--shadow-dark);
         }
         
         .card .endpoints a:hover {
             background-color: var(--button-hover);
-            transform: translateY(-2px); /* Efek angkat */
+            transform: translateY(-2px);
             box-shadow: 0 5px 12px var(--shadow-dark);
         }
         .card .endpoints a:active {
-            transform: translateY(0); /* Efek tekan */
+            transform: translateY(0);
             box-shadow: 0 2px 5px var(--shadow-dark);
         }
         
@@ -264,27 +205,27 @@
             position: fixed;
             z-index: 99;
             bottom: 30px;
-            right: -80px; /* Sembunyikan sepenuhnya */
-            transition: right 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.5s ease; /* Animasi pop-out */
+            right: -80px;
+            transition: right 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.5s ease;
         }
         
         .tombol.show {
-            right: 30px; /* Munculkan */
+            right: 30px;
             opacity: 1;
         }
 
         .tombol button {
             border: none;
-            padding: 18px; /* Ukuran lebih besar */
+            padding: 18px;
             border-radius: 50%;
             background-color: var(--accent-color);
-            box-shadow: 0 5px 15px var(--shadow-dark); /* Shadow lebih kuat */
+            box-shadow: 0 5px 15px var(--shadow-dark);
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
         }
         
         .tombol button:hover {
-            background-color: #5aa1e6; /* Sedikit lebih terang */
+            background-color: #5aa1e6;
             transform: translateY(-3px);
             box-shadow: 0 8px 20px var(--shadow-dark);
         }
@@ -293,10 +234,10 @@
             box-shadow: 0 3px 10px var(--shadow-dark);
         }
 
-        .tombol button a {
+        .tombol button i { /* Mengganti a menjadi i karena hanya ikon */
             color: white;
-            font-size: 26px; /* Ukuran ikon lebih besar */
-            display: block; /* Agar ikon terpusat */
+            font-size: 26px;
+            display: block;
             line-height: 1;
         }
         
@@ -306,7 +247,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8); /* Latar belakang lebih gelap */
+            background: rgba(0, 0, 0, 0.8);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -317,18 +258,18 @@
         }
 
         .alert-box {
-            padding: 35px 40px; /* Padding lebih banyak */
+            padding: 35px 40px;
             background-color: var(--dark-blue-card);
             color: var(--text-color-light);
             border-radius: 10px;
             position: relative;
-            width: 400px; /* Lebar tetap */
-            max-width: 90%; /* Pastikan responsif */
+            width: 400px;
+            max-width: 90%;
             text-align: center;
             opacity: 0;
-            transform: scale(0.8); /* Efek zoom in */
+            transform: scale(0.8);
             transition: opacity 0.5s ease, transform 0.5s ease;
-            box-shadow: 0 10px 30px var(--shadow-dark); /* Shadow lebih kuat */
+            box-shadow: 0 10px 30px var(--shadow-dark);
             border: 1px solid var(--border-color);
         }
         
@@ -341,8 +282,8 @@
         .alert-box button.follow {
             border: none;
             background-color: var(--accent-color);
-            padding: 14px 30px; /* Padding lebih besar */
-            border-radius: 25px; /* Lebih bulat */
+            padding: 14px 30px;
+            border-radius: 25px;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
             font-weight: 600;
@@ -378,19 +319,19 @@
 
         .close-btn {
             position: absolute;
-            top: 15px; /* Posisi lebih baik */
+            top: 15px;
             right: 15px;
             background: none;
             border: none;
             color: var(--text-color-light);
-            font-size: 30px; /* Ukuran lebih besar */
+            font-size: 30px;
             cursor: pointer;
             transition: color 0.3s ease, transform 0.2s ease;
         }
 
         .close-btn:hover {
-            color: #ff6347; /* Warna merah saat hover */
-            transform: rotate(90deg); /* Efek putar */
+            color: #ff6347;
+            transform: rotate(90deg);
         }
 
         /* Responsiveness */
@@ -408,16 +349,8 @@
             .link a {
                 font-size: 1em;
                 margin: 5px 10px;
-                display: block; /* Kembali ke block untuk mobile */
+                display: block;
                 text-align: center;
-            }
-            .tabs-container {
-                padding-bottom: 5px; /* Kurangi padding bottom */
-                border-radius: 0; /* Hilangkan border radius bawah */
-            }
-            .tab-item {
-                padding: 8px 15px;
-                font-size: 0.9em;
             }
             .card {
                 padding: 20px;
@@ -433,20 +366,20 @@
             }
             .card .endpoints .method {
                 margin-bottom: 8px;
-                min-width: unset; /* Hapus min-width */
+                min-width: unset;
             }
             .card .endpoints .name {
                 margin-left: 0;
                 margin-bottom: 10px;
-                white-space: normal; /* Biarkan teks turun baris */
+                white-space: normal;
                 text-overflow: unset;
-                word-break: break-word; /* Memastikan teks panjang pecah */
+                word-break: break-word;
             }
             .card .endpoints a {
-                align-self: flex-end; /* Tombol tetap di kanan bawah */
-                width: 100%; /* Lebar penuh */
+                align-self: flex-end;
+                width: 100%;
                 text-align: center;
-                justify-content: center; /* Pusatkan konten tombol */
+                justify-content: center;
             }
             .tombol {
                 bottom: 20px;
@@ -455,7 +388,7 @@
             .tombol button {
                 padding: 15px;
             }
-            .tombol button a {
+            .tombol button i {
                 font-size: 22px;
             }
             .alert-box {
@@ -495,25 +428,12 @@
         <div class="text-center">
             <h1>Ahmat Api Gateway <span>v1.0.0</span></h1>
             <div class="link">
-                <a href="https://whatsapp.com/channel/0029VaYoztA47XeAhs447Y1s" target="_blank"><i class="fab fa-whatsapp"></i> Contact the developer</a>
-                <a href="https://whatsapp.com/channel/0029VaYoztA47XeAhs447Y1s" target="_blank"><i class="fas fa-info-circle"></i> API Development Information</a>
+                <a href="https://whatsapp.com/channel/0029VaYoztA47XeAhs4447Y1s" target="_blank"><i class="fab fa-whatsapp"></i> Contact the developer</a>
+                <a href="https://whatsapp.com/channel/0029VaYoztA47XeAhs4447Y1s" target="_blank"><i class="fas fa-info-circle"></i> API Development Information</a>
             </div>
         </div>
         
-        <div class="tabs-container">
-            <ul class="tabs" id="apiTabs">
-                <li class="tab-item active" data-target="orderkuota-gateway">Orderkuota Gateway</li>
-                <li class="tab-item" data-target="downloader">Downloader</li>
-                <li class="tab-item" data-target="openai">Openai</li>
-                <li class="tab-item" data-target="tools">Tools</li>
-                <li class="tab-item" data-target="search">Search</li>
-                <li class="tab-item" data-target="sosmed-stalk">Sosmed Stalk</li>
-                <li class="tab-item" data-target="image-creator">Image Creator</li>
-                <li class="tab-item" data-target="panel-pterodactyl">Panel Pterodactyl</li>
-            </ul>
-        </div>
-
-        <div class="card" id="orderkuota-gateway">
+        <div class="card">
             <div class="title">Orderkuota Gateway</div>
             <div class="endpoints">
                 <p class="method">Get</p>
@@ -526,7 +446,7 @@
                 <a href="https://restapi.mat.web.id/api/orkut/cekstatus?apikey=&merchant=&keyorkut=" target="_blank">Try <i class="fas fa-external-link-alt"></i></a>
             </div>
         </div>
-        <div class="card" id="downloader">
+        <div class="card">
             <div class="title">Downloader</div>
             <div class="endpoints">
                 <p class="method">Get</p>
@@ -614,7 +534,7 @@
                 <a href="https://restapi.mat.web.id/api/download/terabox?url=" target="_blank">Try <i class="fas fa-external-link-alt"></i></a>
             </div>                
         </div>
-        <div class="card" id="openai">
+        <div class="card">
             <div class="title">Openai</div>
             <div class="endpoints">
                 <p class="method">Get</p>
@@ -657,7 +577,7 @@
                 <a href="https://restapi.mat.web.id/api/ai/simsimi?msg=" target="_blank">Try <i class="fas fa-external-link-alt"></i></a>
             </div>                    
         </div>
-        <div class="card" id="tools">
+        <div class="card">
             <div class="title">Tools</div>       
             <div class="endpoints">
                 <p class="method">Get</p>
@@ -680,7 +600,7 @@
                 <a href="https://restapi.mat.web.id/api/tools/whois?domain=" target="_blank">Try <i class="fas fa-external-link-alt"></i></a>
             </div>
         </div>
-        <div class="card" id="search">
+        <div class="card">
             <div class="title">Search</div>
             <div class="endpoints">
                 <p class="method">Get</p>
@@ -743,7 +663,7 @@
                 <a href="https://restapi.mat.web.id/api/search/lyrics?q=" target="_blank">Try <i class="fas fa-external-link-alt"></i></a>
             </div>    
         </div>
-        <div class="card" id="sosmed-stalk">
+        <div class="card">
             <div class="title">Sosmed Stalk</div>
             <div class="endpoints">
                 <p class="method">Get</p>
@@ -771,7 +691,7 @@
                 <a href="https://restapi.mat.web.id/api/tools/youtubestalk?user=" target="_blank">Try <i class="fas fa-external-link-alt"></i></a>
             </div>                              
         </div>
-        <div class="card" id="image-creator">
+        <div class="card">
             <div class="title">Image Creator</div>
             <div class="endpoints">
                 <p class="method">Get</p>
@@ -814,7 +734,7 @@
                 <a href="https://restapi.mat.web.id/api/imagecreator/qc?text=&fotoUrl=&nama=" target="_blank">Try <i class="fas fa-external-link-alt"></i></a>
             </div>          
         </div>
-        <div class="card" id="panel-pterodactyl">
+        <div class="card">
             <div class="title">Panel Pterodactyl</div>       
             <div class="endpoints">
                 <p class="method">Get</p>
@@ -860,36 +780,6 @@
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
 
-        // TAB SYSTEM FUNCTIONS
-        function showTab(targetId) {
-            // Remove active class from all tabs
-            document.querySelectorAll('.tab-item').forEach(tab => {
-                tab.classList.remove('active');
-            });
-
-            // Hide all cards with a small delay for fade-out effect
-            document.querySelectorAll('.card').forEach(card => { // Changed to querySelectorAll for all cards
-                card.classList.remove('active');
-                card.style.display = 'none'; 
-            });
-
-            // Add active class to the clicked tab
-            const activeTab = document.querySelector(`.tab-item[data-target="${targetId}"]`);
-            if (activeTab) {
-                activeTab.classList.add('active');
-            }
-
-            // Show the corresponding card with fade-in effect
-            const targetCard = document.getElementById(targetId);
-            if (targetCard) {
-                targetCard.style.display = 'block'; // Make it block first
-                // Trigger reflow to ensure display:block takes effect before opacity transition
-                void targetCard.offsetWidth; 
-                targetCard.classList.add('active'); // Add active for opacity transition
-            }
-        }
-
-
         // INITIALIZATION WHEN DOM IS LOADED
         document.addEventListener("DOMContentLoaded", function() {
             // Initialize Alert Pop-up
@@ -916,21 +806,6 @@
                     backToTopButton.classList.remove("show");
                 }
             });
-
-            // Initialize Tab System
-            const tabsContainer = document.getElementById('apiTabs');
-            // No need to query `cards` here, it's done within `showTab` now
-
-            tabsContainer.addEventListener('click', function(event) {
-                const clickedTab = event.target.closest('.tab-item');
-                if (clickedTab) {
-                    const targetId = clickedTab.dataset.target;
-                    showTab(targetId);
-                }
-            });
-
-            // Show the first tab by default when the DOM is fully loaded
-            showTab('orderkuota-gateway'); 
         });
     </script>
 </body>
