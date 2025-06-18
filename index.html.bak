@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmat Api Gateway</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-blue-bg: #1a202c; /* Hampir hitam */
+            --dark-blue-card: #2d3748; /* Biru gelap sedikit terang */
+            --text-color-light: #e2e8f0; /* Teks terang */
+            --accent-color: #63b3ed; /* Biru cerah untuk highlight */
+            --button-success: #48bb78; /* Hijau untuk tombol "Try" */
+            --button-hover: #38a169;
+            --border-color: rgba(255, 255, 255, 0.15); /* Warna border yang lebih terang */
+            --shadow-light: rgba(0, 0, 0, 0.2);
+            --shadow-dark: rgba(0, 0, 0, 0.4);
+            --tab-active-bg: rgba(99, 179, 237, 0.2); /* Latar belakang tab aktif */
+        }
+
+        body {
+            background-color: var(--dark-blue-bg);
+            font-family: 'Poppins', sans-serif;
+            -webkit-font-smoothing: antialiased; /* Better font rendering */
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-tap-highlight-color: transparent;
+            color: var(--text-color-light);
+            line-height: 1.6;
+        }
+        
+        * {
+            box-sizing: border-box; /* Include padding and border in element's total width and height */
+            scroll-behavior: smooth;
+        }
+        
+        @keyframes colorChange {
+            0% { color: var(--accent-color); }
+            50% { color: var(--text-color-light); }
+            70% { color: var(--accent-color); }
+            100% { color: var(--text-color-light); }
+        }
+
+        .container {
+            max-width: 960px; /* Lebar container sedikit lebih besar */
+            margin: 0 auto;
+            padding: 20px 25px; /* Padding samping sedikit lebih besar */
+        }
+        
+        .text-center {
+            text-align: center;
+            padding-bottom: 40px; /* Jarak bawah lebih jauh */
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .text-center h1 {
+            font-size: 3.2em; /* Ukuran lebih besar lagi */
+            margin-bottom: 10px;
+            animation: colorChange 15s infinite alternate;
+            font-weight: 800; /* Lebih tebal */
+            letter-spacing: -1px; /* Sedikit rapat */
+            text-shadow: 0 0 10px rgba(99, 179, 237, 0.5); /* Efek glow ringan */
+        }
+        
+        .text-center h1 span {
+            font-size: 0.4em;
+            background-color: var(--accent-color);
+            padding: 5px 10px; /* Padding lebih besar */
+            border-radius: 15px; /* Lebih bulat */
+            color: var(--dark-blue-bg);
+            font-weight: 700;
+            vertical-align: middle;
+            margin-left: 10px;
+            box-shadow: 0 2px 5px var(--shadow-dark);
+        }
+        
+        .link {
+            margin-top: 15px; /* Jarak dari h1 */
+        }
+
+        .link a {
+            text-decoration: none;
+            color: var(--accent-color);
+            font-size: 1.15em; /* Ukuran sedikit lebih besar */
+            font-weight: 500;
+            margin: 8px 15px; /* Margin vertikal dan horizontal */
+            display: inline-block; /* Agar bisa berdampingan */
+            transition: color 0.3s ease, transform 0.2s ease;
+            position: relative;
+            padding-bottom: 3px;
+        }
+       
+        .link a:hover {
+            color: var(--text-color-light);
+            transform: translateY(-2px);
+        }
+        .link a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--text-color-light);
+            transition: width 0.3s ease-in-out;
+        }
+        .link a:hover::after {
+            width: 100%;
+        }
+        
+        .tabs-container {
+            width: 100%;
+            overflow-x: auto; /* Memungkinkan scroll horizontal jika tab terlalu banyak */
+            -webkit-overflow-scrolling: touch; /* Untuk smooth scrolling di iOS */
+            white-space: nowrap; /* Mencegah item tab turun baris */
+            margin-bottom: 30px;
+            padding-bottom: 10px; /* Jarak untuk scrollbar */
+            border-bottom: 2px solid var(--border-color);
+            position: sticky; /* Agar tab menempel saat scroll */
+            top: 0;
+            background-color: var(--dark-blue-bg); /* Agar konten di belakang tidak terlihat saat sticky */
+            z-index: 100; /* Pastikan di atas konten lain */
+            box-shadow: 0 5px 15px var(--shadow-dark); /* Shadow untuk efek sticky */
+            border-radius: 0 0 10px 10px; /* Border radius bawah */
+        }
+
+        .tabs {
+            display: inline-flex; /* Agar tab tetap sejajar horizontal */
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 10px; /* Jarak antar tab */
+        }
+
+        .tab-item {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-color-light);
+            background-color: var(--dark-blue-card);
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            flex-shrink: 0; /* Mencegah item menyusut */
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 5px var(--shadow-light);
+        }
+
+        .tab-item:hover {
+            background-color: rgba(99, 179, 237, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px var(--shadow-dark);
+        }
+
+        .tab-item.active {
+            background-color: var(--tab-active-bg); /* Warna latar belakang aktif */
+            color: var(--accent-color); /* Warna teks aktif */
+            border-color: var(--accent-color); /* Border aktif */
+            box-shadow: 0 3px 8px var(--shadow-dark);
+            transform: translateY(0); /* Pastikan tidak terangkat */
+        }
+
+        .card {
+            background-color: var(--dark-blue-card);
+            border-radius: 12px; /* Border radius lebih besar */
+            padding: 25px 30px; /* Padding lebih banyak */
+            margin-bottom: 35px; /* Jarak bawah antar card */
+            box-shadow: 0 8px 20px var(--shadow-dark); /* Shadow lebih kuat */
+            border: 1px solid var(--border-color); /* Border tipis */
+            display: none; /* Sembunyikan semua secara default */
+            opacity: 0;
+            transition: opacity 0.5s ease; /* Transisi untuk fade in/out */
+        }
+        
+        .card.active {
+            display: block; /* Tampilkan card aktif */
+            opacity: 1;
+        }
+        
+        .card .title {
+            font-size: 2em; /* Ukuran lebih besar */
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-color-light);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+        
+        .card .endpoints {
+            display: flex;
+            align-items: center;
+            padding: 15px 0; /* Padding vertikal lebih banyak */
+            border-bottom: solid 1px var(--border-color);
+            gap: 15px; /* Jarak antar elemen flex */
+            transition: background-color 0.3s ease;
+        }
+        
+        .card .endpoints:last-child {
+            border-bottom: none;
+        }
+
+        .card .endpoints:hover {
+            background-color: rgba(99, 179, 237, 0.05); /* Sedikit highlight saat hover */
+            border-radius: 5px; /* Agar hover tidak terpotong di border utama card */
+        }
+
+        .card .endpoints .method {
+            background-color: var(--accent-color);
+            border-radius: 20px;
+            padding: 5px 15px; /* Padding lebih besar */
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: var(--dark-blue-bg);
+            font-size: 0.9em;
+            text-transform: uppercase;
+            min-width: 75px; /* Lebar minimum untuk konsistensi */
+            text-align: center;
+            box-shadow: 0 2px 5px var(--shadow-light);
+        }
+        
+        .card .endpoints .name {
+            font-size: 1.1em; /* Ukuran teks nama lebih besar */
+            font-weight: 500;
+            color: var(--text-color-light);
+            flex-grow: 1;
+            margin-left: 10px; /* Jarak dari method */
+            white-space: nowrap; /* Mencegah teks turun baris */
+            overflow: hidden; /* Sembunyikan jika terlalu panjang */
+            text-overflow: ellipsis; /* Tambahkan elipsis jika disembunyikan */
+        }
+
+        .card .endpoints a {
+            background-color: var(--button-success);
+            border-radius: 20px;
+            padding: 8px 18px; /* Padding lebih besar untuk tombol */
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: white;
+            font-size: 0.9em;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            display: inline-flex; /* Untuk ikon */
+            align-items: center;
+            gap: 5px; /* Jarak antara teks dan ikon */
+            box-shadow: 0 3px 8px var(--shadow-dark);
+        }
+        
+        .card .endpoints a:hover {
+            background-color: var(--button-hover);
+            transform: translateY(-2px); /* Efek angkat */
+            box-shadow: 0 5px 12px var(--shadow-dark);
+        }
+        .card .endpoints a:active {
+            transform: translateY(0); /* Efek tekan */
+            box-shadow: 0 2px 5px var(--shadow-dark);
+        }
+        
+        .tombol {
+            opacity: 0;
+            position: fixed;
+            z-index: 99;
+            bottom: 30px;
+            right: -80px; /* Sembunyikan sepenuhnya */
+            transition: right 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.5s ease; /* Animasi pop-out */
+        }
+        
+        .tombol.show {
+            right: 30px; /* Munculkan */
+            opacity: 1;
+        }
+
+        .tombol button {
+            border: none;
+            padding: 18px; /* Ukuran lebih besar */
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            box-shadow: 0 5px 15px var(--shadow-dark); /* Shadow lebih kuat */
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+        }
+        
+        .tombol button:hover {
+            background-color: #5aa1e6; /* Sedikit lebih terang */
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px var(--shadow-dark);
+        }
+        .tombol button:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 10px var(--shadow-dark);
+        }
+
+        .tombol button a {
+            color: white;
+            font-size: 26px; /* Ukuran ikon lebih besar */
+            display: block; /* Agar ikon terpusat */
+            line-height: 1;
+        }
+        
+        .alert-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8); /* Latar belakang lebih gelap */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s;
+            z-index: 1000;
+        }
+
+        .alert-box {
+            padding: 35px 40px; /* Padding lebih banyak */
+            background-color: var(--dark-blue-card);
+            color: var(--text-color-light);
+            border-radius: 10px;
+            position: relative;
+            width: 400px; /* Lebar tetap */
+            max-width: 90%; /* Pastikan responsif */
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.8); /* Efek zoom in */
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            box-shadow: 0 10px 30px var(--shadow-dark); /* Shadow lebih kuat */
+            border: 1px solid var(--border-color);
+        }
+        
+        .alert-box p {
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            line-height: 1.5;
+        }
+
+        .alert-box button.follow {
+            border: none;
+            background-color: var(--accent-color);
+            padding: 14px 30px; /* Padding lebih besar */
+            border-radius: 25px; /* Lebih bulat */
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 3px 10px var(--shadow-dark);
+        }
+        
+        .alert-box button.follow a {
+            text-decoration: none;
+            color: var(--dark-blue-bg);
+            font-size: 1.1em;
+        }
+
+        .alert-box button.follow:hover {
+            background-color: #5aa1e6;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px var(--shadow-dark);
+        }
+        .alert-box button.follow:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px var(--shadow-dark);
+        }
+        
+        .alert-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .alert-box.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px; /* Posisi lebih baik */
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--text-color-light);
+            font-size: 30px; /* Ukuran lebih besar */
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .close-btn:hover {
+            color: #ff6347; /* Warna merah saat hover */
+            transform: rotate(90deg); /* Efek putar */
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            .text-center h1 {
+                font-size: 2.5em;
+            }
+            .text-center h1 span {
+                font-size: 0.35em;
+                margin-left: 5px;
+            }
+            .link a {
+                font-size: 1em;
+                margin: 5px 10px;
+                display: block; /* Kembali ke block untuk mobile */
+                text-align: center;
+            }
+            .tabs-container {
+                padding-bottom: 5px; /* Kurangi padding bottom */
+                border-radius: 0; /* Hilangkan border radius bawah */
+            }
+            .tab-item {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+            .card {
+                padding: 20px;
+                margin-bottom: 25px;
+            }
+            .card .title {
+                font-size: 1.7em;
+            }
+            .card .endpoints {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 15px 0;
+            }
+            .card .endpoints .method {
+                margin-bottom: 8px;
+                min-width: unset; /* Hapus min-width */
+            }
+            .card .endpoints .name {
+                margin-left: 0;
+                margin-bottom: 10px;
+                white-space: normal; /* Biarkan teks turun baris */
+                text-overflow: unset;
+                word-break: break-word; /* Memastikan teks panjang pecah */
+            }
+            .card .endpoints a {
+                align-self: flex-end; /* Tombol tetap di kanan bawah */
+                width: 100%; /* Lebar penuh */
+                text-align: center;
+                justify-content: center; /* Pusatkan konten tombol */
+            }
+            .tombol {
+                bottom: 20px;
+                right: 20px;
+            }
+            .tombol button {
+                padding: 15px;
+            }
+            .tombol button a {
+                font-size: 22px;
+            }
+            .alert-box {
+                padding: 25px 30px;
+            }
+            .alert-box p {
+                font-size: 1em;
+            }
+            .alert-box button.follow {
+                padding: 10px 20px;
+            }
+            .alert-box button.follow a {
+                font-size: 1em;
+            }
+            .close-btn {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+  <div class="tombol">
+    <button onclick="scrollToTop()"><i class="fas fa-arrow-up"></i></button>
+  </div>
+    <div class="alert-overlay" id="alertOverlay">
+        <div class="alert-box" id="customAlert">
+          <p>
+            Welcome To Ahmat Api Gateway, Jangan Lupa Follow Channel Informasi Update
+            </p>
+            <p>
+            <button class="follow" onclick="closeAlert()"><a target="_blank" href="https://whatsapp.com/channel/0029VaYoztA47XeAhs447Y1s">Follow</a></button>
+            </p>
+            <button class="close-btn" onclick="closeAlert()">&times;</button>
+        </div>
+    </div>
+    <div class="container">
+        <div class="text-center">
+            <h1>Ahmat Api Gateway <span>v1.0.0</span></h1>
+            <div class="link">
+                <a href="https://whatsapp.com/channel/0029VaYoztA47XeAhs447Y1s" target="_blank"><i class="fab fa-whatsapp"></i> Contact the developer</a>
+                <a href="https://whatsapp.com/channel/0029VaYoztA47XeAhs447Y1s" target="_blank"><i class="fas fa-info-circle"></i> API Development Information</a>
+            </div>
+        </div>
+        
+        <div class="tabs-container">
+            <ul class="tabs" id="apiTabs">
+                <li class="tab-item active" data-target="orderkuota-gateway">Orderkuota Gateway</li>
+                <li class="tab-item" data-target="downloader">Downloader</li>
+                <li class="tab-item" data-target="openai">Openai</li>
+                <li class="tab-item" data-target="tools">Tools</li>
+                <li class="tab-item" data-target="search">Search</li>
+                <li class="tab-item" data-target="sosmed-stalk">Sosmed Stalk</li>
+                <li class="tab-item" data-target="image-creator">Image Creator</li>
+                <li class="tab-item" data-target="panel-pterodactyl">Panel Pterodactyl</li>
+            </ul>
+        </div>
+
+        <div class="card" id="orderkuota-gateway">
+            <div class="title">Orderkuota Gateway</div>
+            <div class="endpoints">
+                <p class="method">Get</p>
+                <p class="name">Create Payment</p>
+                <a href="https://restapi.skyzopedia.us.kg/api/orkut/createpayment?apikey=&amount=&codeqr=" target="_blank">Try <i class="fas fa-external-link-alt"></i></a>
+            </div>
+            <div class="endpoints">
+                <p class="method">Get</p>
+                <p class="name">Cek Status</p>
+                <a href="https://restapi.skyzopedia.us.kg/api/orkut/cekstatus?apikey=&merchant=&keyorkut=" target="_blank">Try <i class="fas fa-external-link-alt"></i></a>
+            </div>
+        </div>
+        <div class="card" id="downloader">
+            <div class="title">Downloader</div>
+            <div class="endpoints">
+                <p class="method">G
