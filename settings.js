@@ -1,3 +1,3 @@
 
-global.creator = "Skyzopedia"
-global.apikey = ["apikey1", "apikey2", "apikey3"]
+global.creator = "Ahmat"
+global.apikey = ["MatRest1", "matrkt", "apikey3"]
