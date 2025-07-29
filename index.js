@@ -1449,6 +1449,109 @@ domain: `${domain}`,
 created_at: tanggal(Date.now())
 }
 })
+
+app.get("/api/pterodactyl/createadmin", async (req, res) => {
+let { domain, ptla, ptlc, loc, eggid, nestid, ram, disk, cpu, username } = req.query
+if (!domain || !ptla || !ptlc || !loc || !eggid || !nestid || !ram || !disk || !cpu || !username) return res.json("Isi Parameternya!");
+    try {  
+let apikey = ptla
+let capiley = ptlc
+let disknya = disk
+domain = "https://" + domain
+username = username.toLowerCase()
+let email = username+"@gmail.com"
+let name = capital(username) + " Server"
+let password = username+crypto.randomBytes(3).toString('hex')
+let f = await fetch(domain + "/api/application/users", {
+"method": "POST",
+"headers": {
+"Accept": "application/json",
+"Content-Type": "application/json",
+"Authorization": "Bearer " + apikey
+},
+"body": JSON.stringify({
+"email": email,
+"username": username.toLowerCase(),
+"first_name": name,
+"last_name": "Server",
+"root_admin": true,
+"language": "en",
+"password": password.toString()
+})
+})
+let data = await f.json();
+if (data.errors) return res.json(JSON.stringify(data.errors[0], null, 2))
+let user = data.attributes
+let desc = tanggal(Date.now())
+let usr_id = user.id
+let f1 = await fetch(domain + `/api/application/nests/${nestid}/eggs/` + eggid, {
+"method": "GET",
+"headers": {
+"Accept": "application/json",
+"Content-Type": "application/json",
+"Authorization": "Bearer " + apikey
+}
+})
+let data2 = await f1.json();
+let startup_cmd = data2.attributes.startup
+let f2 = await fetch(domain + "/api/application/servers", {
+"method": "POST",
+"headers": {
+"Accept": "application/json",
+"Content-Type": "application/json",
+"Authorization": "Bearer " + apikey,
+},
+"body": JSON.stringify({
+"name": name,
+"description": desc,
+"user": usr_id,
+"egg": parseInt(eggid),
+"docker_image": "ghcr.io/parkervcp/yolks:nodejs_18",
+"startup": startup_cmd,
+"environment": {
+"INST": "npm",
+"USER_UPLOAD": "0",
+"AUTO_UPDATE": "0",
+"CMD_RUN": "npm start"
+},
+"limits": {
+"memory": ram,
+"swap": 0,
+"disk": disknya,
+"io": 500,
+"cpu": cpu
+},
+"feature_limits": {
+"databases": 5,
+"backups": 5,
+"allocations": 5
+},
+deploy: {
+locations: [parseInt(loc)],
+dedicated_ip: false,
+port_range: [],
+},
+})
+})
+let result = await f2.json()
+if (result.errors) return res.json(JSON.stringify(result.errors[0], null, 2))
+let server = result.attributes
+return res.json({
+status: true, 
+creator: global.creator, 
+result: {
+id_user: usr_id, 
+id_server: server.id, 
+username: user.username, 
+password: password, 
+ram: ram, 
+disk: disknya, 
+cpu: cpu, 
+domain: `${domain}`, 
+created_at: tanggal(Date.now())
+}
+})	    
+	    
     } catch (error) {
         console.log(error);
         res.send(error)
