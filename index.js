@@ -86,7 +86,63 @@ app.get('/api/orkut/createpayment', async (req, res) => {
     }
 })
 
+// --- Letakkan fungsi perhitungan di sini ---
+function hitungMean(arr) {
+    const sum = arr.reduce((a, b) => a + b, 0);
+    return sum / arr.length;
+}
 
+function hitungMedian(arr) {
+    const sortedArr = [...arr].sort((a, b) => a - b);
+    const mid = Math.floor(sortedArr.length / 2);
+    if (sortedArr.length % 2 === 0) {
+        return (sortedArr[mid - 1] + sortedArr[mid]) / 2;
+    } else {
+        return sortedArr[mid];
+    }
+}
+
+function hitungModus(arr) {
+    const counts = {};
+    arr.forEach(num => {
+        counts[num] = (counts[num] || 0) + 1;
+    });
+
+    let modus = null;
+    let maxCount = 0;
+    for (const num in counts) {
+        if (counts[num] > maxCount) {
+            maxCount = counts[num];
+            modus = Number(num);
+        }
+    }
+    return modus;
+}
+// ----------------------------------------
+
+// --- Endpoint baru yang menggunakan fungsi di atas ---
+app.post("/api/hitung", (req, res) => {
+    try {
+        const { data } = req.body;
+        
+        if (!data || !Array.isArray(data) || data.length === 0 || data.some(isNaN)) {
+            return res.status(400).json({ error: 'Data tidak valid.' });
+        }
+
+        const mean = hitungMean(data);
+        const median = hitungMedian(data);
+        const modus = hitungModus(data);
+
+        res.status(200).json({
+            mean: mean.toFixed(2),
+            median: median,
+            mode: modus
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Terjadi kesalahan pada server.' });
+    }
+});
+		
 
 app.get('/api/orkut/cekstatus', async (req, res) => {
     const { merchant, keyorkut } = req.query;
